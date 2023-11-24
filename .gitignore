@@ -1,0 +1,17 @@
+#nodejs
+node_modules
+build
+npm-debug.log
+.nyc
+.env
+.DS_Store
+.idea
+#golang
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work

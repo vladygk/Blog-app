@@ -6,8 +6,8 @@ class PostController {
         
         const posts = await PostService.getAll();
         res.status(200).json(posts);
-      } catch {
-        res.status(500).send("Server error");
+      } catch (error){
+        res.status(500).send(error);
       }
   };
 
@@ -19,8 +19,8 @@ class PostController {
         }
         const post = await PostService.getOneById(id);
         res.status(200).json(post);
-      } catch {
-        res.status(500).send("Server error");
+      } catch (error){
+        res.status(500).send(error);
       }
   };
 
@@ -33,34 +33,34 @@ class PostController {
         }
         const post = await PostService.updateLikes(id,step);
         res.status(200).json(post);
-      } catch {
-        res.status(500).send("Server error");
+      } catch (error){
+        res.status(500).send(error);
       }
   }
 
   createOne = async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content,authorId } = req.body;
     try {
-      const newPost = await PostService.createOne(title, content);
+      const newPost = await PostService.createOne(title, content,authorId);
       res.status(201).json(newPost);
-    } catch {
-      res.status(500).send("Server error");
+    } catch (error){
+      res.status(500).send(error);
     }
   };
 
   editOne = async (req, res) => {
     const {id} = req.params;
-    const { title, content } = req.body;
+    const { title, content,authorId } = req.body;
     try {
         
         if(!id){
             throw new Error('Invalid id');
         }
-      const editedPost = await PostService.updateOne(id, title, content);
+      const editedPost = await PostService.updateOne(id, title, content,authorId);
       res.status(200).json(editedPost);
 
-    } catch {
-      res.status(500).send("Server error");
+    } catch (error){
+      res.status(500).send(error);
     }
   };
   deleteOne = async (req, res) => {
@@ -72,8 +72,8 @@ class PostController {
 
         const post = await PostService.deleteOne(id);
         res.status(200).json(post);
-      } catch {
-        res.status(500).send("Server error");
+      } catch (error){
+        res.status(500).send(error);
       }
 
 

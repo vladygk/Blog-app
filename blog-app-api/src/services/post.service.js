@@ -23,10 +23,10 @@ class PostService {
     }
   };
 
-  createOne = async (title, content) => {
+  createOne = async (title, content,authorId) => {
     try {
-      if (validatePostUserInput(title, content)) {
-        return await PostRepository.createOne(title, content);
+      if (validatePostUserInput(title, content,authorId)) {
+        return await PostRepository.createOne(title, content,authorId);
       }
     } catch (error) {
         logger.error("Cannot create post");
@@ -34,10 +34,10 @@ class PostService {
     }
   };
 
-  updateOne = async (postId, title, content) => {
+  updateOne = async (postId, title, content,authorId) => {
     try {
-      if (validatePostUserInput(title, content)) {
-        return await PostRepository.updateOne(postId, title, content);
+      if (validatePostUserInput(title, content,authorId)) {
+        return await PostRepository.updateOne(postId, title, content,authorId);
       }
     } catch (error) {
         logger.error("Cannot update post");

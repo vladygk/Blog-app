@@ -17,20 +17,20 @@ class PostRepository {
     }
   };
 
-  createOne = async (title, content) => {
+  createOne = async (title, content,authorId) => {
     try {
-      const newPost = new Post({ title, content });
+      const newPost = new Post({ title, content,authorId });
       return  await newPost.save();
     } catch (error) {
       throw error;
     }
   };
 
-  updateOne = async (postId, title, content, likes = 0) => {
+  updateOne = async (postId, title, content,authorId, likes = 0) => {
     try {
       return await Post.findByIdAndUpdate(
         postId,
-        { title, content,likes },
+        { title, content,authorId,likes },
         { new: true }
       );
     } catch (error) {
