@@ -2,6 +2,7 @@ require("./config");
 const mongoose = require("mongoose");
 const Post = require("../models/post.model");
 const Comment = require("../models/comment.model");
+const logger = require('../utils/logger');
 
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
@@ -11,7 +12,7 @@ const connectionString = `mongodb://${DB_USER}:${DB_PASS}@localhost:27017/${DB_N
 
 const connectToDatabase = async () => {
   mongoose.connect(connectionString);
-  console.log("Connected to the database");
+  logger.info("Connected to the database");
   const db = mongoose.connection;
 
   db.once("open", async () => {

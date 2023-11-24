@@ -1,5 +1,6 @@
 const PostRepository = require("../repositories/post.repository");
 const { validatePostUserInput } = require("../utils/validation");
+const logger = require('../utils/logger');
 
 class PostService {
   getAll = async () => {
@@ -7,7 +8,7 @@ class PostService {
       const allPosts = await PostRepository.getAll();
       return allPosts;
     } catch (error) {
-      console.log("Cannot get posts");
+      logger.error("Cannot get posts");
       throw error;
     }
   };
@@ -17,7 +18,7 @@ class PostService {
       const post = await PostRepository.getOneById(postId);
       return post;
     } catch (error) {
-      console.log("Cannot get post");
+      logger.error("Cannot get post");
       throw error;
     }
   };
@@ -28,7 +29,7 @@ class PostService {
         return await PostRepository.createOne(title, content);
       }
     } catch (error) {
-      console.log("Cannot create post");
+        logger.error("Cannot create post");
       throw error;
     }
   };
@@ -39,7 +40,7 @@ class PostService {
         return await PostRepository.updateOne(postId, title, content);
       }
     } catch (error) {
-      console.log("Cannot update post");
+        logger.error("Cannot update post");
       throw error;
     }
   };
@@ -48,7 +49,7 @@ class PostService {
     try {
       await PostRepository.deleteOne(postId);
     } catch (error) {
-      console.log("Cannot delete post");
+        logger.error("Cannot delete post");
       throw error;
     }
   };
@@ -67,7 +68,7 @@ class PostService {
         newLikes
       );
     } catch (error) {
-      console.log("Cannot update post");
+        logger.error("Cannot update post");
       throw error;
     }
   };
