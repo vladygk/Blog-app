@@ -17,6 +17,15 @@ func NewGRPCHandler(service service.Servicer) *GRPCHandler {
 	}
 }
 
+func (h *GRPCHandler) GetAllUsers(ctx context.Context, empty *pb.EmptyRequest) (*pb.UsersInfo, error) {
+	res, err := h.service.GetAllUsers(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return res.ToGRPCResponse().(*pb.UsersInfo), nil
+}
+
 func (h *GRPCHandler) RegisterUser(ctx context.Context, req *pb.UserData) (*pb.JwtToken, error) {
 	res, err := h.service.RegisterUser(ctx, req.Username, req.Email, req.Password)
 	if err != nil {

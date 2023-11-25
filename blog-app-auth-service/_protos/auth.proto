@@ -6,6 +6,7 @@ option go_package = "v1/auth";
 service AuthenticationService{
     rpc RegisterUser(UserData) returns (JwtToken) {}
     rpc LoginUser(UserData) returns (JwtToken) {}
+    rpc GetAllUsers(EmptyRequest) returns (UsersInfo) {}
 }
 
 message UserData {
@@ -17,3 +18,14 @@ message UserData {
 message JwtToken{
     string token = 1;
 }
+
+message UserInfo{
+    string username = 2;
+    string email = 3;
+}
+
+message UsersInfo {
+    repeated UserInfo data = 1;
+}
+
+message EmptyRequest {}

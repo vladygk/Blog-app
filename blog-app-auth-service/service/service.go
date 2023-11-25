@@ -13,6 +13,7 @@ import (
 type Servicer interface {
 	LoginUser(ctx context.Context, username string, password string) (models.ResponseModeler, error)
 	RegisterUser(ctx context.Context, username string, email string, password string) (models.ResponseModeler, error)
+	GetAllUsers(ctx context.Context) (models.ResponseModeler, error)
 }
 
 type service struct {
@@ -22,6 +23,24 @@ type service struct {
 
 func NewService(logger *logrus.Logger, db *mongo.Client) Servicer {
 	return &service{logger, NewRepository(db)}
+}
+
+func (s service) GetAllUsers(ctx context.Context) (models.ResponseModeler, error) {
+	usersDataDTO, err := s.repository.getAllUsers(ctx)
+	if err != nil {
+		s.logger.Error(err)
+		return nil, err
+	}
+
+	usersInfoModel := &models.UsersInfo{
+		Data: []*models.UserInfo{},
+	}
+
+	for _, userDataDto := range usersDataDTO {
+		usersInfoModel.Data = append(usersInfoModel.Data, userDataDto.ToModel())
+	}
+
+	return usersInfoModel, nil
 }
 
 func (s service) LoginUser(ctx context.Context, username string, password string) (models.ResponseModeler, error) {

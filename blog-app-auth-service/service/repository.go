@@ -1,6 +1,7 @@
 package service
 
 import (
+	"blog-app-auth-service/models"
 	"context"
 	"os"
 
@@ -14,6 +15,7 @@ type Repositorer interface {
 	getUserByUsername(ctx context.Context, username string) (*userDataDTO, error)
 	getUserByEmail(ctx context.Context, username string) (*userDataDTO, error)
 	createUser(ctx context.Context, username string, email string, password string) error
+	getAllUsers(ctx context.Context) ([]*userDataDTO, error)
 }
 
 type repository struct {
@@ -32,6 +34,40 @@ type userDataDTO struct {
 	Username     string `bson:"username"`
 	Email        string `bson:"email"`
 	PasswordHash string `bson:"password"`
+}
+
+func (userDataDto *userDataDTO) ToModel() *models.UserInfo {
+	return &models.UserInfo{
+		Username: userDataDto.Username,
+		Email:    userDataDto.Email,
+	}
+}
+
+func (r repository) getAllUsers(ctx context.Context) ([]*userDataDTO, error) {
+	DB_NAME := os.Getenv("DB_NAME")
+	DB_USER_COLLECTION_NAME := os.Getenv("DB_USER_COLLECTION_NAME")
+	usersCollection := r.db.Database(DB_NAME).Collection(DB_USER_COLLECTION_NAME)
+	cur, err := usersCollection.Find(context.Background(), bson.M{})
+
+	var usersDTO []*userDataDTO
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+
+			return usersDTO, nil
+		}
+		return nil, errors.Wrap(err, "Error while getting users from DB")
+	}
+
+	for cur.Next(ctx) {
+		current := &userDataDTO{}
+		err = cur.Decode(current)
+		if err != nil {
+			return nil, errors.Wrap(err, "Error while decoding UserData result from DB")
+		}
+		usersDTO = append(usersDTO, current)
+	}
+
+	return usersDTO, nil
 }
 
 func (r repository) getUserByUsername(ctx context.Context, username string) (*userDataDTO, error) {
