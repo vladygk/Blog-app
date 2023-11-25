@@ -38,9 +38,9 @@ class PostController {
   };
 
   createOne = async (req, res) => {
-    const { title, content, authorId } = req.body;
+    const { title, content, authorName } = req.body;
     try {
-      const newPost = await PostService.createOne(title, content, authorId);
+      const newPost = await PostService.createOne(title, content, authorName);
       res.status(201).json(newPost);
     } catch (error) {
       res.status(500).send();
@@ -49,13 +49,13 @@ class PostController {
 
   editOne = async (req, res) => {
     const { id } = req.params;
-    const { title, content, authorId } = req.body;
+    const { title, content, authorName } = req.body;
     try {
       const editedPost = await PostService.updateOne(
         id,
         title,
         content,
-        authorId
+        authorName
       );
       res.status(200).json(editedPost);
     } catch (error) {

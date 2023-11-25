@@ -23,10 +23,10 @@ class CommentRepository {
     }
   };
 
-  createOne = async (postId, content,authorId) => {
+  createOne = async (postId, content,authorName) => {
     try {
         
-      const newComment = new Comment({ postId, content,authorId });
+      const newComment = new Comment({ postId, content,authorName });
       console.log(newComment);
       return  await newComment.save();
     } catch (error) {

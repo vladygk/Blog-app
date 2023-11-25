@@ -25,12 +25,12 @@ class CommentService {
     }
   };
 
-  createOne = async (postId, content,authorId) => {
+  createOne = async (postId, content,authorName) => {
     try {
-      if (validateCommentInput(postId, content,authorId)) {
+      if (validateCommentInput(postId, content,authorName)) {
         await PostRepository.getOneById(postId);
 
-        return await CommentRepository.createOne(postId, content,authorId);
+        return await CommentRepository.createOne(postId, content,authorName);
       }
     } catch (error) {
         logger.error(error.message);
