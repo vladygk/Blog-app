@@ -26,13 +26,13 @@ class CommentController {
   };
 
   createOne = async (req, res) => {
-    const { postId, content, authorId } = req.body;
+    const { postId, content, authorName } = req.body;
     try {
       const post = await PostService.getOneById(postId);
       const newComment = await CommentService.createOne(
         postId,
         content,
-        authorId
+        authorName
       );
       res.status(201).json(newComment);
     } catch (error) {
