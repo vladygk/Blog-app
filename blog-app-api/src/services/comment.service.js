@@ -1,16 +1,16 @@
 const CommentRepository = require("../repositories/comment.repository");
+const PostRepository = require("../repositories/post.repository");
 const { validateCommentInput } = require("../utils/validation");
 const logger = require('../utils/logger');
 
 class CommentService {
   getAllByPost = async (postId) => {
     try {
-
       const allComments = await CommentRepository.getAll(postId);
       return allComments;
         
     } catch (error) {
-      logger.error("Cannot get comments");
+      logger.error(error.message);
       throw error;
     }
   };
@@ -20,7 +20,7 @@ class CommentService {
       const post = await CommentRepository.getOneById(commentId);
       return post;
     } catch (error) {
-      logger.error("Cannot get comment");
+      logger.error(error.message);
       throw error;
     }
   };
@@ -28,11 +28,12 @@ class CommentService {
   createOne = async (postId, content,authorId) => {
     try {
       if (validateCommentInput(postId, content,authorId)) {
-        console.log(postId, content, authorId);
+        await PostRepository.getOneById(postId);
+
         return await CommentRepository.createOne(postId, content,authorId);
       }
     } catch (error) {
-        logger.error("Cannot create comment");
+        logger.error(error.message);
       throw error;
     }
   };
@@ -42,7 +43,7 @@ class CommentService {
     try {
       await CommentRepository.deleteOne(commentId);
     } catch (error) {
-        logger.error("Cannot delete comment");
+        logger.error(error.message);
       throw error;
     }
   };

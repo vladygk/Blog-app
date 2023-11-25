@@ -1,4 +1,6 @@
 const Comment = require("../models/comment.model");
+const {DocumentNotFoundError} = require("../utils/error");
+
 
 class CommentRepository {
   getAll = async (postId) => {
@@ -11,7 +13,11 @@ class CommentRepository {
 
   getOneById = async (commentId) => {
     try {
-      return await Comment.findById(commentId);
+      const comment = await Comment.findById(commentId);
+      if(!comment){
+        throw new DocumentNotFoundError("Document not found");
+      }
+      return comment;
     } catch (error) {
       throw error;
     }
@@ -30,7 +36,11 @@ class CommentRepository {
 
   deleteOne = async (commentId) => {
     try {
-      return await Comment.findByIdAndDelete(commentId);
+      const comment = await Comment.findByIdAndDelete(commentId);
+      if(!comment){
+        throw new DocumentNotFoundError("Document not found");
+      }
+      return comment;
     } catch (error) {
       throw error;
     }

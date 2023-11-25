@@ -1,4 +1,5 @@
 const Post = require("../models/post.model");
+const {DocumentNotFoundError} = require("../utils/error");
 
 class PostRepository {
   getAll = async () => {
@@ -11,7 +12,11 @@ class PostRepository {
 
   getOneById = async (postId) => {
     try {
-      return await Post.findById(postId);
+      const post =  await Post.findById(postId);
+      if(!post){
+        throw new DocumentNotFoundError("Document not found");
+      }
+      return post;
     } catch (error) {
       throw error;
     }
@@ -28,11 +33,15 @@ class PostRepository {
 
   updateOne = async (postId, title, content,authorId, likes = 0) => {
     try {
-      return await Post.findByIdAndUpdate(
+      const post = await Post.findByIdAndUpdate(
         postId,
         { title, content,authorId,likes },
         { new: true }
       );
+      if(!post){
+        throw new DocumentNotFoundError("Document not found");
+      }
+      return post;
     } catch (error) {
       throw error;
     }
@@ -40,7 +49,11 @@ class PostRepository {
 
   deleteOne = async (postId) => {
     try {
-      return await Post.findByIdAndDelete(postId);
+      const post = await Post.findByIdAndDelete(postId);
+      if(!post){
+        throw new DocumentNotFoundError("Document not found");
+      }
+      return post;
     } catch (error) {
       throw error;
     }
