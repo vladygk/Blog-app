@@ -33,14 +33,14 @@ func (a *App) Initialize(dbConnectionString string) {
 	a.initGRPCServer(service, a.Logger)
 }
 
-func (a *App) buildGRPCHandler(servicer service.Servicer) pb.AuthenticationServiceServer {
-	grpcServer := transport.NewGRPCHandler(servicer)
+func (a *App) buildGRPCHandler(servicer service.Servicer, logger *logrus.Logger) pb.AuthenticationServiceServer {
+	grpcServer := transport.NewGRPCHandler(servicer, logger)
 	return grpcServer
 }
 
 func (a *App) initGRPCServer(service service.Servicer, logger *logrus.Logger) {
 
-	var GRPCHandler = a.buildGRPCHandler(service)
+	var GRPCHandler = a.buildGRPCHandler(service, a.Logger)
 
 	a.Server = grpc.NewServer()
 
