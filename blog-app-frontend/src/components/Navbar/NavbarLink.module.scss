@@ -1,0 +1,26 @@
+$initial-width: 7vw;
+$initial-height: 3vh;
+
+.link {
+    font-weight: 700;
+    margin-right: 8vw;
+    font-size: 1.6rem;
+    width: 5vw;
+    margin: 0;
+    text-decoration: 'none';
+    color: black;
+    height: $initial-height;
+    box-sizing: content-box;
+    margin-right: 2vw;
+    border-bottom: 3px solid black;
+    width: $initial-width;
+}
+
+.link:hover {
+    height: calc($initial-height - 6px);
+    width: calc($initial-width - 6px);
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+    color: black !important;
+}

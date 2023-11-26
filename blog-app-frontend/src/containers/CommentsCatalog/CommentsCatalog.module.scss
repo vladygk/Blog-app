@@ -1,0 +1,17 @@
+.wrapper {
+    border: 3px solid black;
+    padding: 1vh;
+    background-color: black;
+    width: 21vw;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 0;
+}

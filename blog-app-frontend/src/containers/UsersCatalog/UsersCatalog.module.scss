@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    align-items: center;
+    scrollbar-width: none;
+    width: 80%;
+    min-height: 100%;
+    background-color: #f0f2f5;
+}
+
+.title {
+    font-size: 4rem;
+    font-family: 800;
+    text-decoration: underline;
+}
+
+.wrapper::-webkit-scrollbar {
+    width: 0;
+}
+
+.row{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 90%;
+    display: flex;
+    justify-content: space-evenly;
+}

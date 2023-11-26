@@ -1,0 +1,32 @@
+.wrapper {
+    color: black;
+    height: 7.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 5px solid black;
+    border-radius: 20px;
+    width: 18vw;
+    background-color: #f0f2f5;
+}
+
+.author {
+    padding-left: 1vw;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-align: start;
+}
+
+.content {
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: start;
+    padding-right: 1vw;
+    padding-left: 1vw;
+}
