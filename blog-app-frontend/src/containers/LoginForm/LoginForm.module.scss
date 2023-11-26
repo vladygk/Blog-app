@@ -7,25 +7,26 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    margin-bottom: 30vh;
 }
 
-.title{
+.title {
     font-weight: 800;
     position: absolute;
-    top:0;
-    color:black;
+    top: 0;
+    color: black;
     font-size: 3rem;
     text-decoration: underline;
 }
 
 @media (max-width: 1000px) {
 
-    .wrapper{
+    .wrapper {
         width: 50vw;
     }
 }
 
-.link{
+.link {
     margin-top: 3vh;
     text-decoration: 'none';
     color: black;

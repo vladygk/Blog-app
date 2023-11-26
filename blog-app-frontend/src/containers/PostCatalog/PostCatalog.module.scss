@@ -18,3 +18,12 @@
     font-family: 800;
     text-decoration: underline;
 }
+.container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}
