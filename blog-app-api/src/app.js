@@ -7,11 +7,11 @@ const postRouter = require('./routes/post.route');
 const commentRouter = require('./routes/comment.route');
 const userRouter = require('./routes/user.route');
 const logger = require('./utils/logger');
-
+const cors = require('cors');
 
 const app = express();
 
-app.use([express.urlencoded({extended:false}),express.json()]);
+app.use([cors(), express.urlencoded({extended:false}),express.json()]);
 app.use(morgan('combined'));
 
 app.use('/posts',postRouter);

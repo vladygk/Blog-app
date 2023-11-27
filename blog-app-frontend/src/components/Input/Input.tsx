@@ -12,9 +12,13 @@ interface InputProps{
     placeholder:string;
     inputType: InputTypes;
     labelText:string;
+    onChange?:(e:any)=>void;
+    onBlur:(e:any)=>void;
+    value?:any;
+    hasError:boolean;
 }
 
-const Input:React.FC<InputProps> = ({id,name,placeholder, inputType, labelText}) => {
+const Input:React.FC<InputProps> = ({id,name,placeholder, inputType, labelText,onBlur, onChange, value, hasError}) => {
 
     let type;
     if(inputType === InputTypes.Text ){
@@ -27,8 +31,10 @@ const Input:React.FC<InputProps> = ({id,name,placeholder, inputType, labelText})
         <div className={styles.wrapper}>
             <div>
              <label className={styles.label} htmlFor={id}>{labelText}</label></div>
-             <input className={styles.inputField} type={type} id={id} name={name} placeholder={placeholder}/>
+             <input onBlur={onBlur} value={value} onChange={onChange} className={hasError?styles.error: styles.inputField} type={type} id={id} name={name} placeholder={hasError?"Invalid input": placeholder}/>
+            
         </div>
+        
       );
 }
  

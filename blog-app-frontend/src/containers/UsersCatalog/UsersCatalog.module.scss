@@ -1,10 +1,11 @@
 .wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     align-items: center;
     scrollbar-width: none;
     width: 80%;
@@ -12,7 +13,15 @@
     background-color: #f0f2f5;
 }
 
+.usersWrapper{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .title {
+    position: absolute;
+    top: 0.5vh;
     font-size: 4rem;
     font-family: 800;
     text-decoration: underline;
@@ -22,13 +31,6 @@
     width: 0;
 }
 
-.row{
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-    width: 90%;
-    display: flex;
-    justify-content: space-evenly;
-}
 
 .container{
     display: flex;
