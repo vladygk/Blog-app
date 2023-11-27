@@ -8,6 +8,9 @@ class UserService{
     getAllUsers =async ()=>{
         const url = "http://localhost:5000/auth/all";
         const response = await fetch(url);
+        if(response.status>=400){
+            throw new Error('Request failed')
+        }
         const data = await response.json();
         return data.data;
     }
@@ -21,8 +24,12 @@ class UserService{
             },
             body:JSON.stringify(input)
         });
+        if(response.status>=400){
+            throw new Error('Request failed')
+        }
         const data = await response.json();
-        console.log(data);
+    
+        return data;
     }
 
     registerUser = async (input:UserRequestInput)=>{
@@ -34,8 +41,11 @@ class UserService{
             },
             body:JSON.stringify(input)
         });
+        if(response.status>=400){
+            throw new Error('Request failed')
+        }
         const data = await response.json();
-        console.log(data);
+        return data;
     }
 }
 

@@ -1,16 +1,18 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import Button from "../../components/Button/Button";
 import Input, { InputTypes } from "../../components/Input/Input";
 import styles from "./LoginForm.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserService, { UserRequestInput } from "../../services/UserService";
+import LocalStorageHandler from '../../utils/LocalStorage';
+import { JwtToken } from "../../utils/JwtTokenHandler";
+import AuthContext from "../../context/AuthContext";
 
 interface InputErrors{
   username:false;
   email:false;
   password:false;
 }
-
 
 const LoginForm: React.FC = () => {
   const [formInput, setFormInput]: [
@@ -20,6 +22,10 @@ const LoginForm: React.FC = () => {
 
   const [errors, setErrors]:[InputErrors, Dispatch<SetStateAction<InputErrors>>]
   = useState({ username: false, email: false, password:false });
+
+  const {setToken} = useContext(AuthContext);
+
+  const navigator = useNavigate();
 
   const onChangeValue = (e:any) => {
     const { value } = e.target;
@@ -32,10 +38,18 @@ const LoginForm: React.FC = () => {
   const onSubmit = async (e:any) =>{
     e.preventDefault();
 
-    if(Object.values(errors).some(err=>err===true)){
+    if (Object.values(errors).some((err) => err === true)|| Object.values(formInput).some((val) => val === '')) {
       return;
     }
-    const result = await UserService.loginUser(formInput)
+
+    try {
+      const result: JwtToken = await UserService.loginUser(formInput);
+      LocalStorageHandler.setToStorage(result.token);
+      setToken(LocalStorageHandler.getFromStorage());
+      navigator("/posts");
+    } catch {
+      navigator("/error");
+    }
   }
 
   const onBlur = (e: any) => {

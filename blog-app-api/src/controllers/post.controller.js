@@ -39,6 +39,7 @@ class PostController {
 
   createOne = async (req, res) => {
     const { title, content, authorName } = req.body;
+    console.log(req.body);
     try {
       const newPost = await PostService.createOne(title, content, authorName);
       res.status(201).json(newPost);

@@ -6,12 +6,13 @@ interface NavbarLinkProps {
   text: string;
   url: string;
   children: React.ReactNode;
+  onClick?:(e:any)=>void;
 }
 
-const NavbarLink: React.FC<NavbarLinkProps> = ({ text, url, children }) => {
+const NavbarLink: React.FC<NavbarLinkProps> = ({ text, url, children,onClick }) => {
   return (
     <>
-      <Link className={styles.link} to={url}>
+      <Link onClick={onClick? onClick : ()=>{}} className={styles.link} to={url}>
         {text}
         {children}
       </Link>

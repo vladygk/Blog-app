@@ -6,14 +6,16 @@ interface TextAreaProps{
     name:string;
     placeholder:string;
     labelText:string;
+    onChange:(e:any)=>void;
+    value:string;
 }
 
-const TextArea:React.FC<TextAreaProps> = ({id,name,placeholder, labelText}) => {
+const TextArea:React.FC<TextAreaProps> = ({id,name,placeholder, labelText, value,onChange}) => {
     return (
         <div className={styles.wrapper}>
             <div>
              <label className={styles.label} htmlFor={id}>{labelText}</label></div>
-             <textarea className={styles.textField} id={id} name={name} placeholder={placeholder}/>
+             <textarea value={value} onChange={onChange} className={styles.textField} id={id} name={name} placeholder={placeholder}/>
         </div>
       );
 }

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import UserCard, { UserCardInput } from "../../components/UserCard/UserCard";
 import styles from "./UsersCatalog.module.scss";
 import UserService from "../../services/UserService";
+import { useNavigate } from "react-router-dom";
 
 const UsersCatalog: React.FC = () => {
   const [allUsers, setAllUsers] = useState([]);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +14,7 @@ const UsersCatalog: React.FC = () => {
         const data = await UserService.getAllUsers();
         setAllUsers(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        navigator('/error');
       }
     };
     fetchData();

@@ -1,11 +1,12 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import Button from "../../components/Button/Button";
 import Input, { InputTypes } from "../../components/Input/Input";
 import styles from './ReigsterForm.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserService, { UserRequestInput } from "../../services/UserService";
-
-
+import { JwtToken } from '../../utils/JwtTokenHandler';
+import LocalStorageHandler from '../../utils/LocalStorage';
+import AuthContext from '../../context/AuthContext';
 interface InputErrors{
   username:false;
   email:false;
@@ -22,7 +23,9 @@ const RegisterForm:React.FC = () => {
 
   const [errors, setErrors]:[InputErrors, Dispatch<SetStateAction<InputErrors>>]
   = useState({ username: false, email: false, password:false, repassword:false });
-
+  const navigator= useNavigate();
+  const {setToken} = useContext(AuthContext);
+  
   const onChangeValue = (e:any) => {
     const { value } = e.target;
     setFormInput((prevFormInput) => ({
@@ -67,10 +70,17 @@ const RegisterForm:React.FC = () => {
   const onSubmit = async (e:any) =>{
     e.preventDefault();
 
-    if(Object.values(errors).some(err=>err===true)){
+    if(Object.values(errors).some(err=>err===true) || Object.values(formInput).some(val=>val==='')){
       return;
     }
-    const result = await UserService.registerUser(formInput)
+    try {
+      const result: JwtToken = await UserService.registerUser(formInput);
+      LocalStorageHandler.setToStorage(result.token);
+      setToken(LocalStorageHandler.getFromStorage());
+      navigator("/posts");
+    } catch {
+      navigator("/error");
+    }
   }
 
     return (

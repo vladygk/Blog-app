@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.route("/")
     .get(PostController.getAll)
-    .post(authenticateToken,PostController.createOne);
+    .post(authenticateToken, PostController.createOne);
 
 router.route("/:id")
     .get(PostController.getOne)
-    .put(PostController.editOne)
+    .put(authenticateToken,PostController.editOne)
     .delete(authenticateToken,PostController.deleteOne);
 
 router.route("/:id/likes")
