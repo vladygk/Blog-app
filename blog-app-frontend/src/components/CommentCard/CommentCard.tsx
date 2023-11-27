@@ -14,7 +14,7 @@ export interface CommentCardProps{
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({content,authorName,_id,setIsDeleting}) => {
-  const {token} = useContext(AuthContext);
+  const {token,username} = useContext(AuthContext);
   const navigator =useNavigate();
 
   const onDelete = async (id:string)=>{
@@ -31,7 +31,7 @@ const CommentCard: React.FC<CommentCardProps> = ({content,authorName,_id,setIsDe
       <div className={styles.author}>{authorName}</div>
       <FaArrowRightLong size={40}/>
       <p className={styles.content}>{content}</p>
-      <MdDeleteForever onClick={()=>onDelete(_id)} className='iconButton' size={40}/>
+      {username === authorName && <MdDeleteForever onClick={()=>onDelete(_id)} className='iconButton' size={40}/>}
     </div>
   );
 };
