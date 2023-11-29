@@ -35,7 +35,7 @@ From the root folder:
 
 - JWT authentication
 - Independent scalability for the Backend API and the Backend Authentication Service
-- Responsive design
+- Microservice choreography pattern
  
 # Photos:
 ## Home page
