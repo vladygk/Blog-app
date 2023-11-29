@@ -17,7 +17,7 @@ const CommentCard: React.FC<CommentCardProps> = ({content,authorName,_id,setIsDe
   const {token,username} = useContext(AuthContext);
   const navigator =useNavigate();
 
-  const onDelete = async (id:string)=>{
+  const onDelete = async (_id:string)=>{
     try{
     await CommentService.deleteComment(_id,token);
     setIsDeleting((state:boolean)=>!state);
